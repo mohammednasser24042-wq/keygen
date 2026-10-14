@@ -458,11 +458,13 @@ function copyResult() {
 
 function downloadLicFile() {
     let content = document.getElementById("resultText").value;
-    let blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+    let blob = new Blob([content], { type: "application/octet-stream" }); // تم تغيير نوع الملف لفرض التحميل كملف خام
     let a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
     a.download = "Apexora.lic";
+    document.body.appendChild(a);
     a.click();
+    document.body.removeChild(a);
     showToast("💾 جاري تحميل ملف التفعيل");
 }
 </script>
