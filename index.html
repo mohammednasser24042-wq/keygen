@@ -3,133 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apexora ERP | Secure Key Generator</title>
+    <title>Apexora ERP | Secure Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
+
         * {
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Cairo', sans-serif;
         }
+
         body {
-            background-color: #f0f2f5;
+            background: var(--bg-gradient);
             margin: 0;
-            padding: 15px;
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            color: var(--text-main);
         }
-        .card {
-            background: #ffffff;
+
+        .container {
             width: 100%;
-            max-width: 420px;
-            padding: 25px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            border: 1px solid #e1e8ed;
+            max-width: 440px;
         }
-        .header {
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 35px 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .brand-logo {
             text-align: center;
             margin-bottom: 25px;
         }
-        .header h2 {
+
+        .brand-logo h1 {
             margin: 0;
-            color: #0d6efd;
-            font-size: 22px;
-            font-weight: 700;
+            font-size: 26px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #4f46e5, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.5px;
         }
-        .header p {
-            margin: 5px 0 0;
-            color: #6c757d;
+
+        .brand-logo p {
+            margin: 8px 0 0;
+            color: var(--text-muted);
             font-size: 13px;
+            font-weight: 600;
         }
+
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 20px;
         }
+
         label {
             display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
-            color: #343a40;
-            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: var(--text-main);
+            font-size: 13px;
         }
+
+        .input-wrapper {
+            position: relative;
+        }
+
         input[type="text"], input[type="password"], input[type="date"] {
             width: 100%;
-            padding: 12px 14px;
-            border: 1px solid #ced4da;
-            border-radius: 8px;
+            padding: 14px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
             font-size: 15px;
             outline: none;
-            transition: border-color 0.2s;
-            background-color: #fff;
+            transition: all 0.2s ease;
+            background-color: #f8fafc;
+            color: var(--text-main);
+            font-weight: 600;
         }
+
         input:focus {
-            border-color: #0d6efd;
-            box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+            border-color: var(--primary);
+            background-color: #fff;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
         }
-        .btn-main {
+
+        .btn-primary {
             width: 100%;
-            padding: 13px;
-            background-color: #0d6efd;
+            padding: 14px;
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
-            transition: background 0.2s;
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+            transition: all 0.2s ease;
+            margin-top: 5px;
         }
-        .btn-main:active {
-            background-color: #0b5ed7;
-            transform: scale(0.98);
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(79, 70, 229, 0.4);
         }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
         .result-area {
-            margin-top: 20px;
+            margin-top: 25px;
             display: none;
+            animation: fadeIn 0.4s ease;
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         textarea {
             width: 100%;
-            height: 90px;
-            padding: 10px;
-            border: 1px solid #ced4da;
-            border-radius: 8px;
-            background-color: #f8f9fa;
+            height: 100px;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            background-color: #f1f5f9;
             font-family: monospace;
             font-size: 13px;
             resize: none;
-            color: #212529;
+            color: #0f172a;
             direction: ltr;
             text-align: left;
+            font-weight: 600;
         }
+
         .action-btns {
             display: flex;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 12px;
+            margin-top: 12px;
         }
-        .btn-sub {
+
+        .btn-sec {
             flex: 1;
-            padding: 10px;
-            border: 1px solid #ced4da;
-            border-radius: 6px;
-            background: #ffffff;
-            font-weight: 600;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            background: #fff;
+            font-weight: 700;
             font-size: 13px;
             cursor: pointer;
-            color: #495057;
+            color: var(--text-main);
+            transition: all 0.2s;
         }
-        .btn-sub:active {
-            background: #e9ecef;
+
+        .btn-sec:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
         }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
         .logout-btn {
-            background: none;
+            background: #fee2e2;
             border: none;
-            color: #dc3545;
-            font-weight: 600;
+            color: #ef4444;
+            font-weight: 700;
             font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 8px;
             cursor: pointer;
-            float: left;
-            margin-bottom: 10px;
+            transition: background 0.2s;
         }
+
+        .logout-btn:hover {
+            background: #fecaca;
+        }
+
         #generatorScreen {
             display: none;
         }
@@ -137,62 +211,69 @@
 </head>
 <body>
 
-<div class="card">
-    
-    <!-- = شاشة تسجيل الدخول = -->
-    <div id="loginScreen">
-        <div class="header">
-            <h2>Apexora Security</h2>
-            <p>تسجيل دخول المطور للوصول لنظام التراخيص</p>
-        </div>
+<div class="container">
+    <div class="card">
         
-        <div class="form-group">
-            <label>اسم المستخدم:</label>
-            <input type="text" id="username" placeholder="أدخل اسم المستخدم..." autocomplete="off">
+        <!-- = شاشة تسجيل الدخول الفخمة = -->
+        <div id="loginScreen">
+            <div class="brand-logo">
+                <h1>APEXORA</h1>
+                <p>بوابة إدارة وتوليد التراخيص المشفرة</p>
+            </div>
+            
+            <div class="form-group">
+                <label>اسم المستخدم</label>
+                <input type="text" id="username" placeholder="أدخل اسم المستخدم..." autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label>كلمة المرور</label>
+                <input type="password" id="password" placeholder="أدخل كلمة المرور...">
+            </div>
+
+            <button type="button" class="btn-primary" onclick="checkLogin()">تسجيل الدخول</button>
         </div>
 
-        <div class="form-group">
-            <label>كلمة المرور:</label>
-            <input type="password" id="password" placeholder="أدخل كلمة المرور...">
-        </div>
+        <!-- = شاشة التوليد الرئيسية = -->
+        <div id="generatorScreen">
+            <div class="top-bar">
+                <div>
+                    <h3 style="margin:0; font-size:16px; color:var(--primary);">مرحباً، بالمطور</h3>
+                    <span style="font-size:11px; color:var(--text-muted);">النظام جاهز للتوليد</span>
+                </div>
+                <button type="button" class="logout-btn" onclick="logout()">تسجيل خروج</button>
+            </div>
 
-        <button type="button" class="btn-main" onclick="checkLogin()">دخول للنظام</button>
-    </div>
+            <div class="brand-logo" style="margin-bottom: 20px;">
+                <h1 style="font-size: 20px;">Key Generator</h1>
+            </div>
 
-    <!-- = شاشة توليد التراخيص (مخفية لحين الدخول) = -->
-    <div id="generatorScreen">
-        <button type="button" class="logout-btn" onclick="logout()">🔒 تسجيل خروج</button>
-        <div class="header" style="clear: both;">
-            <h2>Apexora Key Generator</h2>
-            <p>نظام توليد تراخيص الأجهزة المحمول</p>
-        </div>
+            <div class="form-group">
+                <label>سريال هارد العميل (HDD)</label>
+                <input type="text" id="clientHDD" placeholder="مثال: W-DXW1E8045173" autocomplete="off">
+            </div>
 
-        <div class="form-group">
-            <label>سريال هارد العميل (HDD):</label>
-            <input type="text" id="clientHDD" placeholder="مثال: W-DXW1E8045173" autocomplete="off">
-        </div>
+            <div class="form-group">
+                <label>تاريخ انتهاء الاشتراك</label>
+                <input type="date" id="expiryDate">
+            </div>
 
-        <div class="form-group">
-            <label>تاريخ انتهاء الاشتراك:</label>
-            <input type="date" id="expiryDate">
-        </div>
+            <button type="button" class="btn-primary" onclick="processGeneration()">توليد كود التفعيل</button>
 
-        <button type="button" class="btn-main" onclick="processGeneration()">توليد كود التفعيل</button>
-
-        <div class="result-area" id="resultContainer">
-            <label>محتوى ملف الترخيص النهائي:</label>
-            <textarea id="resultText" readonly></textarea>
-            <div class="action-btns">
-                <button type="button" class="btn-sub" onclick="copyResult()">📋 نسخ النص</button>
-                <button type="button" class="btn-sub" onclick="downloadLicFile()">💾 تحميل Apexora.lic</button>
+            <div class="result-area" id="resultContainer">
+                <label>ملف التفعيل النهائي (Apexora.lic)</label>
+                <textarea id="resultText" readonly></textarea>
+                <div class="action-btns">
+                    <button type="button" class="btn-sec" onclick="copyResult()">📋 نسخ</button>
+                    <button type="button" class="btn-sec" onclick="downloadLicFile()">💾 تحميل</button>
+                </div>
             </div>
         </div>
-    </div>
 
+    </div>
 </div>
 
 <script>
-// تحديد بيانات الدخول الخاصة بك (يمكنك تغييرها كما تحب)
 const ADMIN_USER = "admin";
 const ADMIN_PASS = "apexora2026";
 
@@ -204,7 +285,7 @@ function checkLogin() {
         document.getElementById("loginScreen").style.display = "none";
         document.getElementById("generatorScreen").style.display = "block";
     } else {
-        alert("اسم المستخدم أو كلمة المرور غير صحيحة!");
+        alert("بيانات الدخول غير صحيحة!");
     }
 }
 
@@ -215,12 +296,10 @@ function logout() {
     document.getElementById("loginScreen").style.display = "block";
 }
 
-// تحويل الأرقام العربية إلى إنجليزية
 function parseArabicNumbers(str) {
     return str.replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d));
 }
 
-// دالة التشفير المطابقة تماماً للإكسس (3 دورات)
 function GenerateLicenseKey(hardwareID, expiryDate) {
     let rawData = hardwareID.trim().toUpperCase() + "|" + expiryDate;
     let masterKey = "ApexoraSec2026_MasterKey#99!";
@@ -229,15 +308,9 @@ function GenerateLicenseKey(hardwareID, expiryDate) {
 
     for (let i = 1; i <= rawData.length; i++) {
         let charCode = rawData.charCodeAt(i - 1);
-
-        // الدورة الأولى: XOR مع المفتاح الديناميكي
         let dynChar = dynamicKey.charCodeAt(((i - 1) % dynamicKey.length));
         charCode = charCode ^ dynChar;
-
-        // الدورة الثانية: عملية تدوير رقمية
         charCode = (charCode + (i * 7)) % 256;
-
-        // الدورة الثالثة: XOR ثانية مع المفتاح الرئيسي بالعكس
         let masChar = masterKey.charCodeAt((masterKey.length - ((i - 1) % masterKey.length)) - 1);
         charCode = charCode ^ masChar;
 
@@ -269,9 +342,7 @@ function processGeneration() {
         }
 
         let cleanHDD = parseArabicNumbers(hddInput.trim());
-        let formattedDate = dateInput;
-
-        let finalKey = GenerateLicenseKey(cleanHDD, formattedDate);
+        let finalKey = GenerateLicenseKey(cleanHDD, dateInput);
         let fullFileContent = "---APEXORA OFFICIAL LICENSE FILE---\n" + finalKey;
 
         document.getElementById("resultText").value = fullFileContent;
@@ -285,17 +356,14 @@ function processGeneration() {
 function copyResult() {
     let txt = document.getElementById("resultText");
     txt.select();
-    txt.setSelectionRange(0, 99999);
     navigator.clipboard.writeText(txt.value).then(() => {
-        alert("تم نسخ محتوى التفعيل إلى الحافظة بنجاح!");
-    }).catch(() => {
-        alert("تم التحديد، يمكنك النسخ المباشر.");
+        alert("تم النسخ بنجاح!");
     });
 }
 
 function downloadLicFile() {
     let content = document.getElementById("resultText").value;
-    let blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+    let blob = newBlob = new Blob([content], { type: "text/plain;charset=utf-8" });
     let a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
     a.download = "Apexora.lic";
