@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apexora ERP | Key Generator</title>
+    <title>Apexora ERP | Secure Key Generator</title>
     <style>
         * {
             box-sizing: border-box;
@@ -52,7 +52,7 @@
             color: #343a40;
             font-size: 14px;
         }
-        input[type="text"], input[type="date"] {
+        input[type="text"], input[type="password"], input[type="date"] {
             width: 100%;
             padding: 12px 14px;
             border: 1px solid #ced4da;
@@ -120,39 +120,101 @@
         .btn-sub:active {
             background: #e9ecef;
         }
+        .logout-btn {
+            background: none;
+            border: none;
+            color: #dc3545;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            float: left;
+            margin-bottom: 10px;
+        }
+        #generatorScreen {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <div class="header">
-        <h2>Apexora Key Generator</h2>
-        <p>نظام توليد تراخيص الأجهزة المحمول</p>
+    
+    <!-- = شاشة تسجيل الدخول = -->
+    <div id="loginScreen">
+        <div class="header">
+            <h2>Apexora Security</h2>
+            <p>تسجيل دخول المطور للوصول لنظام التراخيص</p>
+        </div>
+        
+        <div class="form-group">
+            <label>اسم المستخدم:</label>
+            <input type="text" id="username" placeholder="أدخل اسم المستخدم..." autocomplete="off">
+        </div>
+
+        <div class="form-group">
+            <label>كلمة المرور:</label>
+            <input type="password" id="password" placeholder="أدخل كلمة المرور...">
+        </div>
+
+        <button type="button" class="btn-main" onclick="checkLogin()">دخول للنظام</button>
     </div>
 
-    <div class="form-group">
-        <label>سريال هارد العميل (HDD):</label>
-        <input type="text" id="clientHDD" placeholder="مثال: W-DXW1E8045173" autocomplete="off">
-    </div>
+    <!-- = شاشة توليد التراخيص (مخفية لحين الدخول) = -->
+    <div id="generatorScreen">
+        <button type="button" class="logout-btn" onclick="logout()">🔒 تسجيل خروج</button>
+        <div class="header" style="clear: both;">
+            <h2>Apexora Key Generator</h2>
+            <p>نظام توليد تراخيص الأجهزة المحمول</p>
+        </div>
 
-    <div class="form-group">
-        <label>تاريخ انتهاء الاشتراك:</label>
-        <input type="date" id="expiryDate">
-    </div>
+        <div class="form-group">
+            <label>سريال هارد العميل (HDD):</label>
+            <input type="text" id="clientHDD" placeholder="مثال: W-DXW1E8045173" autocomplete="off">
+        </div>
 
-    <button type="button" class="btn-main" onclick="processGeneration()">توليد كود التفعيل</button>
+        <div class="form-group">
+            <label>تاريخ انتهاء الاشتراك:</label>
+            <input type="date" id="expiryDate">
+        </div>
 
-    <div class="result-area" id="resultContainer">
-        <label>محتوى ملف الترخيص النهائي:</label>
-        <textarea id="resultText" readonly></textarea>
-        <div class="action-btns">
-            <button type="button" class="btn-sub" onclick="copyResult()">📋 نسخ النص</button>
-            <button type="button" class="btn-sub" onclick="downloadLicFile()">💾 تحميل Apexora.lic</button>
+        <button type="button" class="btn-main" onclick="processGeneration()">توليد كود التفعيل</button>
+
+        <div class="result-area" id="resultContainer">
+            <label>محتوى ملف الترخيص النهائي:</label>
+            <textarea id="resultText" readonly></textarea>
+            <div class="action-btns">
+                <button type="button" class="btn-sub" onclick="copyResult()">📋 نسخ النص</button>
+                <button type="button" class="btn-sub" onclick="downloadLicFile()">💾 تحميل Apexora.lic</button>
+            </div>
         </div>
     </div>
+
 </div>
 
 <script>
+// تحديد بيانات الدخول الخاصة بك (يمكنك تغييرها كما تحب)
+const ADMIN_USER = "admin";
+const ADMIN_PASS = "apexora2026";
+
+function checkLogin() {
+    let u = document.getElementById("username").value.trim();
+    let p = document.getElementById("password").value.trim();
+
+    if (u === ADMIN_USER && p === ADMIN_PASS) {
+        document.getElementById("loginScreen").style.display = "none";
+        document.getElementById("generatorScreen").style.display = "block";
+    } else {
+        alert("اسم المستخدم أو كلمة المرور غير صحيحة!");
+    }
+}
+
+function logout() {
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("generatorScreen").style.display = "none";
+    document.getElementById("loginScreen").style.display = "block";
+}
+
 // تحويل الأرقام العربية إلى إنجليزية
 function parseArabicNumbers(str) {
     return str.replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d));
@@ -207,7 +269,7 @@ function processGeneration() {
         }
 
         let cleanHDD = parseArabicNumbers(hddInput.trim());
-        let formattedDate = dateInput; // صيغة date input هي دائماً YYYY-MM-DD
+        let formattedDate = dateInput;
 
         let finalKey = GenerateLicenseKey(cleanHDD, formattedDate);
         let fullFileContent = "---APEXORA OFFICIAL LICENSE FILE---\n" + finalKey;
