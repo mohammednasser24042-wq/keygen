@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apexora ERP | Secure Key Generator</title>
+    <title>Apexora ERP | Enterprise Security Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #4f46e5;
             --primary-hover: #4338ca;
-            --bg-gradient: linear-gradient(135deg, #090d16 0%, #171b36 100%);
-            --card-bg: rgba(255, 255, 255, 0.97);
-            --text-main: #1e293b;
+            --bg-gradient: radial-gradient(circle at center, #111827 0%, #030712 100%);
+            --card-bg: rgba(255, 255, 255, 0.98);
+            --text-main: #0f172a;
             --text-muted: #64748b;
-            --border-color: #e2e8f0;
+            --border-color: #cbd5e1;
             --success: #10b981;
         }
 
         * {
             box-sizing: border-box;
             font-family: 'Cairo', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -40,11 +41,11 @@
 
         .card {
             background: var(--card-bg);
-            backdrop-filter: blur(15px);
-            padding: 35px 30px;
-            border-radius: 24px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            padding: 38px 32px;
+            border-radius: 28px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(79, 70, 229, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             position: relative;
             overflow: hidden;
         }
@@ -56,13 +57,13 @@
 
         .brand-logo h1 {
             margin: 0;
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 900;
             background: linear-gradient(135deg, #4f46e5, #06b6d4);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: 1px;
-            text-shadow: 0 0 30px rgba(79, 70, 229, 0.2);
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 35px rgba(79, 70, 229, 0.3);
         }
 
         .brand-logo p {
@@ -80,9 +81,10 @@
             color: #3730a3;
             font-size: 11px;
             font-weight: 700;
-            padding: 4px 10px;
+            padding: 5px 12px;
             border-radius: 20px;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 8px rgba(79, 70, 229, 0.1);
         }
 
         .form-group {
@@ -104,7 +106,7 @@
             border-radius: 14px;
             font-size: 15px;
             outline: none;
-            transition: all 0.25s ease;
+            transition: all 0.3s ease;
             background-color: #f8fafc;
             color: var(--text-main);
             font-weight: 600;
@@ -113,14 +115,14 @@
         input:focus {
             border-color: var(--primary);
             background-color: #fff;
-            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
         }
 
         .checkbox-group {
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
             font-size: 13px;
             font-weight: 600;
             color: var(--text-muted);
@@ -128,15 +130,15 @@
         }
 
         .checkbox-group input {
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
             accent-color: var(--primary);
             cursor: pointer;
         }
 
         .btn-primary {
             width: 100%;
-            padding: 14px;
+            padding: 15px;
             background: linear-gradient(135deg, #4f46e5, #6366f1);
             color: white;
             border: none;
@@ -144,27 +146,27 @@
             font-size: 16px;
             font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+            box-shadow: 0 8px 22px rgba(79, 70, 229, 0.35);
             transition: all 0.2s ease;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(79, 70, 229, 0.4);
+            box-shadow: 0 12px 28px rgba(79, 70, 229, 0.45);
         }
 
         .btn-primary:active {
-            transform: translateY(0);
+            transform: scale(0.98);
         }
 
         .result-area {
             margin-top: 25px;
             display: none;
-            animation: fadeIn 0.4s ease;
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -205,16 +207,20 @@
 
         .btn-sec:hover {
             background: #f8fafc;
-            border-color: #cbd5e1;
+            border-color: #94a3b8;
+        }
+
+        .btn-sec:active {
+            transform: scale(0.97);
         }
 
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 22px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid #e2e8f0;
         }
 
         .logout-btn {
@@ -223,7 +229,7 @@
             color: #ef4444;
             font-weight: 700;
             font-size: 12px;
-            padding: 6px 12px;
+            padding: 7px 14px;
             border-radius: 10px;
             cursor: pointer;
             transition: background 0.2s;
@@ -233,39 +239,39 @@
             background: #fecaca;
         }
 
-        /* Toast Notification */
+        /* Toast Notification الفخم */
         #toast {
             visibility: hidden;
-            min-width: 220px;
-            background-color: #1e293b;
+            min-width: 240px;
+            background-color: #0f172a;
             color: #fff;
             text-align: center;
-            border-radius: 12px;
-            padding: 12px;
+            border-radius: 14px;
+            padding: 14px 20px;
             position: fixed;
             z-index: 99;
             left: 50%;
-            bottom: 30px;
+            bottom: 35px;
             transform: translateX(-50%);
             font-size: 14px;
-            font-weight: 600;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
+            font-weight: 700;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.15);
         }
 
         #toast.show {
             visibility: visible;
-            animation: fadein 0.4s, fadeout 0.4s 2.2s;
+            animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1), fadeOut 0.35s cubic-bezier(0.16, 1, 0.3, 1) 2.3s;
         }
 
-        @keyframes fadein {
-            from { bottom: 0; opacity: 0; }
-            to { bottom: 30px; opacity: 1; }
+        @keyframes slideUp {
+            from { bottom: 0; opacity: 0; transform: translateX(-50%) scale(0.9); }
+            to { bottom: 35px; opacity: 1; transform: translateX(-50%) scale(1); }
         }
 
-        @keyframes fadeout {
-            from { bottom: 30px; opacity: 1; }
-            to { bottom: 0; opacity: 0; }
+        @keyframes fadeOut {
+            from { bottom: 35px; opacity: 1; transform: translateX(-50%) scale(1); }
+            to { bottom: 0; opacity: 0; transform: translateX(-50%) scale(0.9); }
         }
 
         #generatorScreen {
@@ -281,7 +287,7 @@
         <!-- = شاشة تسجيل الدخول = -->
         <div id="loginScreen">
             <div class="brand-logo">
-                <div class="security-badge">🔒 بوابة مشفرة مؤمنة</div>
+                <div class="security-badge">🔒 بوابة التراخيص المشفرة</div>
                 <h1>APEXORA</h1>
                 <p>تسجيل دخول المطور لإدارة التراخيص</p>
             </div>
@@ -300,7 +306,7 @@
                 <input type="checkbox" id="rememberMe"> تذكرني على هذا الجهاز
             </label>
 
-            <button type="button" class="btn-primary" onclick="checkLogin()">دخول آمن</button>
+            <button type="button" class="btn-primary" onclick="checkLogin()">دخول آمن 🚀</button>
         </div>
 
         <!-- = شاشة التوليد الرئيسية = -->
@@ -308,13 +314,13 @@
             <div class="top-bar">
                 <div>
                     <h3 style="margin:0; font-size:15px; color:var(--primary);">مرحباً، بالمطور</h3>
-                    <span style="font-size:11px; color:var(--text-muted);">جلسة نشطة وآمنة</span>
+                    <span style="font-size:11px; color:var(--text-muted);">جلسة نشطة وآمنة 100%</span>
                 </div>
                 <button type="button" class="logout-btn" onclick="logout()">خروج 🔒</button>
             </div>
 
-            <div class="brand-logo" style="margin-bottom: 20px;">
-                <h1 style="font-size: 20px;">Key Generator</h1>
+            <div class="brand-logo" style="margin-bottom: 22px;">
+                <h1 style="font-size: 22px;">Key Generator</h1>
             </div>
 
             <div class="form-group">
@@ -349,7 +355,6 @@
 const ADMIN_USER = "admin";
 const ADMIN_PASS = "MS1104kd8";
 
-// التحقق عند فتح الصفحة إذا كان المطور مسجل دخوله مسبقاً
 window.onload = function() {
     if (localStorage.getItem("apexora_logged") === "true") {
         document.getElementById("loginScreen").style.display = "none";
@@ -361,7 +366,7 @@ function showToast(message) {
     let x = document.getElementById("toast");
     x.innerText = message;
     x.className = "show";
-    setTimeout(() => { x.className = x.className.replace("show", ""); }, 2600);
+    setTimeout(() => { x.className = x.className.replace("show", ""); }, 2650);
 }
 
 function checkLogin() {
@@ -375,7 +380,7 @@ function checkLogin() {
         }
         document.getElementById("loginScreen").style.display = "none";
         document.getElementById("generatorScreen").style.display = "block";
-        showToast("✨ تم تسجيل الدخول بنجاح");
+        showToast("✨ أهلاً بك يا بشمهندس، تم تسجيل الدخول");
     } else {
         showToast("❌ بيانات الدخول غير صحيحة!");
     }
@@ -441,7 +446,7 @@ function processGeneration() {
 
         document.getElementById("resultText").value = fullFileContent;
         document.getElementById("resultContainer").style.display = "block";
-        showToast("⚡ تم توليد كود التفعيل بنجاح");
+        showToast("⚡ تم توليد وتشفير كود التفعيل بنجاح");
 
     } catch (err) {
         showToast("❌ حدث خطأ أثناء المعالجة");
@@ -452,20 +457,20 @@ function copyResult() {
     let txt = document.getElementById("resultText");
     txt.select();
     navigator.clipboard.writeText(txt.value).then(() => {
-        showToast("📋 تم النسخ إلى الحافظة");
+        showToast("📋 تم نسخ محتوى التفعيل إلى الحافظة");
     });
 }
 
 function downloadLicFile() {
     let content = document.getElementById("resultText").value;
-    let blob = new Blob([content], { type: "application/octet-stream" }); // تم تغيير نوع الملف لفرض التحميل كملف خام
+    let blob = new Blob([content], { type: "application/octet-stream" });
     let a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
     a.download = "Apexora.lic";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    showToast("💾 جاري تحميل ملف التفعيل");
+    showToast("💾 تم تحميل ملف Apexora.lic بنجاح");
 }
 </script>
 
