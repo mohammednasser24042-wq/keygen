@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apexora ERP | Key Generator</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 420px;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border: 1px solid #e1e8ed;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .header h2 {
+            margin: 0;
+            color: #0d6efd;
+            font-size: 22px;
+            font-weight: 700;
+        }
+        .header p {
+            margin: 5px 0 0;
+            color: #6c757d;
+            font-size: 13px;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #343a40;
+            font-size: 14px;
+        }
+        input[type="text"], input[type="date"] {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+            background-color: #fff;
+        }
+        input:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+        }
+        .btn-main {
+            width: 100%;
+            padding: 13px;
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
+            transition: background 0.2s;
+        }
+        .btn-main:active {
+            background-color: #0b5ed7;
+            transform: scale(0.98);
+        }
+        .result-area {
+            margin-top: 20px;
+            display: none;
+        }
+        textarea {
+            width: 100%;
+            height: 90px;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            font-family: monospace;
+            font-size: 13px;
+            resize: none;
+            color: #212529;
+            direction: ltr;
+            text-align: left;
+        }
+        .action-btns {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .btn-sub {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            background: #ffffff;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            color: #495057;
+        }
+        .btn-sub:active {
+            background: #e9ecef;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="header">
+        <h2>Apexora Key Generator</h2>
+        <p>نظام توليد تراخيص الأجهزة المحمول</p>
+    </div>
+
+    <div class="form-group">
+        <label>سريال هارد العميل (HDD):</label>
+        <input type="text" id="clientHDD" placeholder="مثال: W-DXW1E8045173" autocomplete="off">
+    </div>
+
+    <div class="form-group">
+        <label>تاريخ انتهاء الاشتراك:</label>
+        <input type="date" id="expiryDate">
+    </div>
+
+    <button type="button" class="btn-main" onclick="processGeneration()">توليد كود التفعيل</button>
+
+    <div class="result-area" id="resultContainer">
+        <label>محتوى ملف الترخيص النهائي:</label>
+        <textarea id="resultText" readonly></textarea>
+        <div class="action-btns">
+            <button type="button" class="btn-sub" onclick="copyResult()">📋 نسخ النص</button>
+            <button type="button" class="btn-sub" onclick="downloadLicFile()">💾 تحميل Apexora.lic</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// تحويل الأرقام العربية إلى إنجليزية
+function parseArabicNumbers(str) {
+    return str.replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d));
+}
+
+// دالة التشفير المطابقة تماماً للإكسس (3 دورات)
+function GenerateLicenseKey(hardwareID, expiryDate) {
+    let rawData = hardwareID.trim().toUpperCase() + "|" + expiryDate;
+    let masterKey = "ApexoraSec2026_MasterKey#99!";
+    let dynamicKey = masterKey + hardwareID.trim().toUpperCase();
+    let hexResult = "";
+
+    for (let i = 1; i <= rawData.length; i++) {
+        let charCode = rawData.charCodeAt(i - 1);
+
+        // الدورة الأولى: XOR مع المفتاح الديناميكي
+        let dynChar = dynamicKey.charCodeAt(((i - 1) % dynamicKey.length));
+        charCode = charCode ^ dynChar;
+
+        // الدورة الثانية: عملية تدوير رقمية
+        charCode = (charCode + (i * 7)) % 256;
+
+        // الدورة الثالثة: XOR ثانية مع المفتاح الرئيسي بالعكس
+        let masChar = masterKey.charCodeAt((masterKey.length - ((i - 1) % masterKey.length)) - 1);
+        charCode = charCode ^ masChar;
+
+        let hexVal = charCode.toString(16).toUpperCase();
+        if (hexVal.length < 2) hexVal = "0" + hexVal;
+        hexResult += hexVal;
+    }
+
+    if (hexResult.length >= 20) {
+        return "APX-" + hexResult.substring(0, 5) + "-" + hexResult.substring(5, 10) + "-" + hexResult.substring(10, 15) + "-" + hexResult.substring(15);
+    } else {
+        return "APX-" + hexResult;
+    }
+}
+
+function processGeneration() {
+    try {
+        let hddInput = document.getElementById("clientHDD").value;
+        let dateInput = document.getElementById("expiryDate").value;
+
+        if (!hddInput || !hddInput.trim()) {
+            alert("الرجاء إدخال سريال هارد العميل أولاً!");
+            return;
+        }
+
+        if (!dateInput) {
+            alert("الرجاء اختيار تاريخ انتهاء الاشتراك!");
+            return;
+        }
+
+        let cleanHDD = parseArabicNumbers(hddInput.trim());
+        let formattedDate = dateInput; // صيغة date input هي دائماً YYYY-MM-DD
+
+        let finalKey = GenerateLicenseKey(cleanHDD, formattedDate);
+        let fullFileContent = "---APEXORA OFFICIAL LICENSE FILE---\n" + finalKey;
+
+        document.getElementById("resultText").value = fullFileContent;
+        document.getElementById("resultContainer").style.display = "block";
+
+    } catch (err) {
+        alert("حدث خطأ أثناء المعالجة: " + err.message);
+    }
+}
+
+function copyResult() {
+    let txt = document.getElementById("resultText");
+    txt.select();
+    txt.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(txt.value).then(() => {
+        alert("تم نسخ محتوى التفعيل إلى الحافظة بنجاح!");
+    }).catch(() => {
+        alert("تم التحديد، يمكنك النسخ المباشر.");
+    });
+}
+
+function downloadLicFile() {
+    let content = document.getElementById("resultText").value;
+    let blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+    let a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "Apexora.lic";
+    a.click();
+}
+</script>
+
+</body>
+</html>
