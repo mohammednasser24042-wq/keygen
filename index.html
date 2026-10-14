@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apexora ERP | Secure Portal</title>
+    <title>Apexora ERP | Secure Key Generator</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #4f46e5;
             --primary-hover: #4338ca;
-            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-            --card-bg: rgba(255, 255, 255, 0.95);
+            --bg-gradient: linear-gradient(135deg, #090d16 0%, #171b36 100%);
+            --card-bg: rgba(255, 255, 255, 0.97);
             --text-main: #1e293b;
             --text-muted: #64748b;
             --border-color: #e2e8f0;
+            --success: #10b981;
         }
 
         * {
@@ -39,12 +40,13 @@
 
         .card {
             background: var(--card-bg);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
             padding: 35px 30px;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .brand-logo {
@@ -54,19 +56,33 @@
 
         .brand-logo h1 {
             margin: 0;
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 900;
             background: linear-gradient(135deg, #4f46e5, #06b6d4);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            text-shadow: 0 0 30px rgba(79, 70, 229, 0.2);
         }
 
         .brand-logo p {
-            margin: 8px 0 0;
+            margin: 6px 0 0;
             color: var(--text-muted);
             font-size: 13px;
             font-weight: 600;
+        }
+
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #e0e7ff;
+            color: #3730a3;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 15px;
         }
 
         .form-group {
@@ -81,18 +97,14 @@
             font-size: 13px;
         }
 
-        .input-wrapper {
-            position: relative;
-        }
-
         input[type="text"], input[type="password"], input[type="date"] {
             width: 100%;
             padding: 14px 16px;
             border: 2px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: 14px;
             font-size: 15px;
             outline: none;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
             background-color: #f8fafc;
             color: var(--text-main);
             font-weight: 600;
@@ -101,7 +113,25 @@
         input:focus {
             border-color: var(--primary);
             background-color: #fff;
-            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .checkbox-group input {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary);
+            cursor: pointer;
         }
 
         .btn-primary {
@@ -110,13 +140,12 @@
             background: linear-gradient(135deg, #4f46e5, #6366f1);
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             font-size: 16px;
             font-weight: 700;
             cursor: pointer;
             box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
             transition: all 0.2s ease;
-            margin-top: 5px;
         }
 
         .btn-primary:hover {
@@ -144,7 +173,7 @@
             height: 100px;
             padding: 12px;
             border: 2px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: 14px;
             background-color: #f1f5f9;
             font-family: monospace;
             font-size: 13px;
@@ -165,7 +194,7 @@
             flex: 1;
             padding: 12px;
             border: 2px solid var(--border-color);
-            border-radius: 10px;
+            border-radius: 12px;
             background: #fff;
             font-weight: 700;
             font-size: 13px;
@@ -195,13 +224,48 @@
             font-weight: 700;
             font-size: 12px;
             padding: 6px 12px;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             transition: background 0.2s;
         }
 
         .logout-btn:hover {
             background: #fecaca;
+        }
+
+        /* Toast Notification */
+        #toast {
+            visibility: hidden;
+            min-width: 220px;
+            background-color: #1e293b;
+            color: #fff;
+            text-align: center;
+            border-radius: 12px;
+            padding: 12px;
+            position: fixed;
+            z-index: 99;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        #toast.show {
+            visibility: visible;
+            animation: fadein 0.4s, fadeout 0.4s 2.2s;
+        }
+
+        @keyframes fadein {
+            from { bottom: 0; opacity: 0; }
+            to { bottom: 30px; opacity: 1; }
+        }
+
+        @keyframes fadeout {
+            from { bottom: 30px; opacity: 1; }
+            to { bottom: 0; opacity: 0; }
         }
 
         #generatorScreen {
@@ -214,11 +278,12 @@
 <div class="container">
     <div class="card">
         
-        <!-- = شاشة تسجيل الدخول الفخمة = -->
+        <!-- = شاشة تسجيل الدخول = -->
         <div id="loginScreen">
             <div class="brand-logo">
+                <div class="security-badge">🔒 بوابة مشفرة مؤمنة</div>
                 <h1>APEXORA</h1>
-                <p>بوابة إدارة وتوليد التراخيص المشفرة</p>
+                <p>تسجيل دخول المطور لإدارة التراخيص</p>
             </div>
             
             <div class="form-group">
@@ -231,17 +296,21 @@
                 <input type="password" id="password" placeholder="أدخل كلمة المرور...">
             </div>
 
-            <button type="button" class="btn-primary" onclick="checkLogin()">تسجيل الدخول</button>
+            <label class="checkbox-group">
+                <input type="checkbox" id="rememberMe"> تذكرني على هذا الجهاز
+            </label>
+
+            <button type="button" class="btn-primary" onclick="checkLogin()">دخول آمن</button>
         </div>
 
         <!-- = شاشة التوليد الرئيسية = -->
         <div id="generatorScreen">
             <div class="top-bar">
                 <div>
-                    <h3 style="margin:0; font-size:16px; color:var(--primary);">مرحباً، بالمطور</h3>
-                    <span style="font-size:11px; color:var(--text-muted);">النظام جاهز للتوليد</span>
+                    <h3 style="margin:0; font-size:15px; color:var(--primary);">مرحباً، بالمطور</h3>
+                    <span style="font-size:11px; color:var(--text-muted);">جلسة نشطة وآمنة</span>
                 </div>
-                <button type="button" class="logout-btn" onclick="logout()">تسجيل خروج</button>
+                <button type="button" class="logout-btn" onclick="logout()">خروج 🔒</button>
             </div>
 
             <div class="brand-logo" style="margin-bottom: 20px;">
@@ -258,7 +327,7 @@
                 <input type="date" id="expiryDate">
             </div>
 
-            <button type="button" class="btn-primary" onclick="processGeneration()">توليد كود التفعيل</button>
+            <button type="button" class="btn-primary" onclick="processGeneration()">توليد كود التفعيل ⚡</button>
 
             <div class="result-area" id="resultContainer">
                 <label>ملف التفعيل النهائي (Apexora.lic)</label>
@@ -273,27 +342,52 @@
     </div>
 </div>
 
+<!-- رسالة الإشعار المنبثقة (Toast) -->
+<div id="toast">تم بنجاح!</div>
+
 <script>
 const ADMIN_USER = "admin";
-const ADMIN_PASS = "apexora2026";
+const ADMIN_PASS = "MS1104kd8";
+
+// التحقق عند فتح الصفحة إذا كان المطور مسجل دخوله مسبقاً
+window.onload = function() {
+    if (localStorage.getItem("apexora_logged") === "true") {
+        document.getElementById("loginScreen").style.display = "none";
+        document.getElementById("generatorScreen").style.display = "block";
+    }
+}
+
+function showToast(message) {
+    let x = document.getElementById("toast");
+    x.innerText = message;
+    x.className = "show";
+    setTimeout(() => { x.className = x.className.replace("show", ""); }, 2600);
+}
 
 function checkLogin() {
     let u = document.getElementById("username").value.trim();
     let p = document.getElementById("password").value.trim();
+    let remember = document.getElementById("rememberMe").checked;
 
     if (u === ADMIN_USER && p === ADMIN_PASS) {
+        if (remember) {
+            localStorage.setItem("apexora_logged", "true");
+        }
         document.getElementById("loginScreen").style.display = "none";
         document.getElementById("generatorScreen").style.display = "block";
+        showToast("✨ تم تسجيل الدخول بنجاح");
     } else {
-        alert("بيانات الدخول غير صحيحة!");
+        showToast("❌ بيانات الدخول غير صحيحة!");
     }
 }
 
 function logout() {
+    localStorage.removeItem("apexora_logged");
     document.getElementById("username").value = "";
     document.getElementById("password").value = "";
     document.getElementById("generatorScreen").style.display = "none";
     document.getElementById("loginScreen").style.display = "block";
+    showToast("🔒 تم تسجيل الخروج بنجاح");
 }
 
 function parseArabicNumbers(str) {
@@ -332,12 +426,12 @@ function processGeneration() {
         let dateInput = document.getElementById("expiryDate").value;
 
         if (!hddInput || !hddInput.trim()) {
-            alert("الرجاء إدخال سريال هارد العميل أولاً!");
+            showToast("⚠️ الرجاء إدخال سريال الهارد!");
             return;
         }
 
         if (!dateInput) {
-            alert("الرجاء اختيار تاريخ انتهاء الاشتراك!");
+            showToast("⚠️ الرجاء اختيار تاريخ الانتهاء!");
             return;
         }
 
@@ -347,9 +441,10 @@ function processGeneration() {
 
         document.getElementById("resultText").value = fullFileContent;
         document.getElementById("resultContainer").style.display = "block";
+        showToast("⚡ تم توليد كود التفعيل بنجاح");
 
     } catch (err) {
-        alert("حدث خطأ أثناء المعالجة: " + err.message);
+        showToast("❌ حدث خطأ أثناء المعالجة");
     }
 }
 
@@ -357,17 +452,18 @@ function copyResult() {
     let txt = document.getElementById("resultText");
     txt.select();
     navigator.clipboard.writeText(txt.value).then(() => {
-        alert("تم النسخ بنجاح!");
+        showToast("📋 تم النسخ إلى الحافظة");
     });
 }
 
 function downloadLicFile() {
     let content = document.getElementById("resultText").value;
-    let blob = newBlob = new Blob([content], { type: "text/plain;charset=utf-8" });
+    let blob = new Blob([content], { type: "text/plain;charset=utf-8" });
     let a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
     a.download = "Apexora.lic";
     a.click();
+    showToast("💾 جاري تحميل ملف التفعيل");
 }
 </script>
 
